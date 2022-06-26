@@ -31,9 +31,9 @@
     "vue-template-compiler": "^2.6.14"
   },
   "eslintConfig": {
-    "root": true,
+    "root": false,
     "env": {
-      "node": true
+      "node": false
     },
     "extends": [
       "plugin:vue/essential",
@@ -44,7 +44,8 @@
     },
     "rules": {
       "vue/no-unused-components": "off",
-      "vue/multi-word-component-names": "off"
+      "vue/multi-word-component-names": "off",
+      "no-unused-vars": "off"
     }
   },
   "browserslist": [

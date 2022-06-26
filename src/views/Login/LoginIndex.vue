@@ -1,5 +1,5 @@
 <template>
-  <div >
+  <div>
     <el-row>
       <el-col :span="8">
         <div class="grid-content"></div>
@@ -7,24 +7,12 @@
       <el-col :span="8" class="login-col">
         <div class="grid-content bg-white">
           <el-row>
-
-
-              <p class="login-title">欢迎登录智慧校园服务平台</p>
-              <LoginIcon/>
-
-
+            <p class="login-title">欢迎登录智慧校园服务平台</p>
+            <LoginIcon/>
           </el-row>
-          <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="login-form">
-            <el-form-item  prop="userNum">
-              <el-input type="text" v-model="ruleForm2.userNum" placeholder="学号"></el-input>
-            </el-form-item>
-            <el-form-item  prop="userPass">
-              <el-input type="password" v-model="ruleForm2.userPass" placeholder="密码"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="submitForm('ruleForm2')" class="login-but">登录</el-button>
-            </el-form-item>
-          </el-form>
+          <div style="position: absolute;left: 50%;transform: translate(-50%,-50%);bottom: -60px">
+            <LoginForm @userlogin="login"/>
+          </div>
         </div>
       </el-col>
       <el-col :span="8">
@@ -36,81 +24,69 @@
 
 <script>
 import LoginIcon from "@/views/Login/LoginIcon";
+import LoginForm from "@/components/loginfrom/LoginForm";
 
 export default {
   name: "LoginIndex",
   components: {
-    LoginIcon
-  },
-  data() {
-    var validateUserNum = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入学号'));
-      } else {
-        callback();
-      }
-    };
-    var validateUserPass = (rule, value, callback) => {
-      if (value === '') {
-        callback(new Error('请输入密码'));
-      } else {
-        callback();
-      }
-    };
-    return {
-      ruleForm2: {
-        userNum: '',
-        userPass: '',
-      },
-      rules2: {
-        userNum: [
-          {validator: validateUserNum, trigger: 'blur'}
-        ],
-        userPass: [
-          {validator: validateUserPass, trigger: 'blur'}
-        ],
-
-      }
-    };
-  },
-  methods: {
-    submitForm(formName) {
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          this.$message({
-            showClose: true,
-            message: '登录成功',
-            type: 'success'
-          });
-          this.$router.push("/");
-        } else {
-          this.$message({
-            showClose: true,
-            message: '登录失败，请检查学号或密码',
-            type: 'error'
-          });
-        }
-      });
+    LoginIcon,
+    LoginForm
+  },methods:{
+    login(form) {
+      let userName = form.username
+      let userPwd = form.password
+      this.$router.push('./home')
+      // const loading = this.$loading({
+      //   lock: true,
+      //   text: '正在登录',
+      //   spinner: 'el-icon-loading',
+      //   background: 'rgba(0, 0, 0, 0.7)'
+      // })
+      //
+      // loginNetwork(userName, userPwd).then(data =>{
+      //   if(data.code === 200){
+      //     let userIfo = data.result
+      //     this.$store.commit(LOGINSUCCESS, userIfo)
+      //     this.$message.success('登录成功，即将进入系统')
+      //     setTimeout(()=>{
+      //       findUserByUserIdStr(userIfo.userIdStr).then((data)=>{
+      //         if(data.code === 200){
+      //           let user = data.result
+      //
+      //           this.$store.commit(CHECKSUCCESS, {loginUser: user})
+      //         }else {
+      //           this.$message('验证用户失败')
+      //         }
+      //       })
+      //     }, 1500)
+      //   }else{
+      //     //登录失败
+      //    this.$message.error('登录失败, '+data.msg)
+      //   }
+      //
+      // }).catch(e => {
+      //   this.$message.error('出错拉,检查网络试试或联系管理员')
+      // }).finally(()=>{
+      //   loading.close()
+      // })
     },
   },
-  beforeCreate () {
-    this.$nextTick(()=>{
+  beforeCreate() {
+    this.$nextTick(() => {
       document.body.setAttribute('style', 'background:#99a9bf')
     })
   },
-
-  beforeDestroy () {
+  beforeDestroy() {
     document.body.removeAttribute('style')
   }
+
 }
 </script>
 
 <style lang="less" scoped>
-@h: 40px;
-@w: 160px;
-
 .el-row {
   margin-bottom: 20px;
+
   &:last-child {
     margin-bottom: 0;
   }
@@ -127,30 +103,29 @@ export default {
 .grid-content {
   border-radius: 4px;
   min-height: 36px;
+  position: relative;
+  height: 600px;
 }
 
 .login-col {
+
   padding: 20px;
   text-align: center;
   margin-top: 100px;
   background-color: #f9fafc;
-  border-radius: 4px;
+  border-radius: 12px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, .256), 0 0 6px rgba(0, 0, 0, .04);
 }
 
-.login-but {
-  margin-left: 5px;
-  height: @h;
-  width: @w;
-}
-
 .login-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.1) !important;
+  -webkit-text-stroke: 1px rgba(0, 0, 150, 0.7);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
   text-align: center;
-  font-size: 22px;
-  font-weight: 600;
-  text-transform: uppercase;
-  display: inline-block;
-  color: #2c3e50;
+  width: 100%;
+  margin: 20px 0;
 }
-
 </style>
