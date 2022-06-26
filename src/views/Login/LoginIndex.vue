@@ -42,7 +42,7 @@
 <script>
 import LoginIcon from "@/views/Login/LoginIcon";
 import LoginForm from "@/components/loginfrom/LoginForm";
-import {loginNetwork} from "@/network/login";
+import {loginNetwork} from "@/network/user";
 import {CHECKSUCCESS, LOGINSUCCESS} from "@/store/mutations-types";
 import {findUserByUserIdStr} from "@/network/user";
 
@@ -65,9 +65,17 @@ export default {
   },
   methods: {
     callForCaptcha(form) {
-      this.dialogVisible = true;
       this.userName = form.username
       this.userPwd = form.password
+      findUserByUserIdStr(form.username).then((data)=>{
+        if(data.code === 200){
+          // let user = data.result
+          // this.$store.commit(CHECKSUCCESS, {loginUser: user})
+        }else {
+          this.$message('验证用户失败')
+        }
+      })
+      this.dialogVisible = true;
     },
     login() {
       let captcha = this.form.captcha
@@ -88,17 +96,6 @@ export default {
           let userIfo = data.result
           this.$store.commit(LOGINSUCCESS, userIfo)
           this.$message.success('登录成功，即将进入系统')
-          setTimeout(()=>{
-            findUserByUserIdStr(userIfo.userIdStr).then((data)=>{
-              if(data.code === 200){
-                let user = data.result
-                this.$router.push('./home')
-                this.$store.commit(CHECKSUCCESS, {loginUser: user})
-              }else {
-                this.$message('验证用户失败')
-              }
-            })
-          }, 1500)
         }else{
           //登录失败
           this.$message.error('登录失败, '+data.msg)

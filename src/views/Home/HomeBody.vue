@@ -1,19 +1,27 @@
 <template>
-  <el-container>
-    <el-header>Header</el-header>
+  <div>
     <el-container>
-      <HomeAside/>
-      <el-main>Main</el-main>
+      <el-header><HeaderBar/></el-header>
+      <el-container>
+        <HomeAside/>
+        <el-main>Main</el-main>
+      </el-container>
     </el-container>
-  </el-container>
+    <FooterCard style="height: 230px"/>
+  </div>
+
 </template>
 
 <script>
 import HomeAside from "@/views/Home/HomeAside";
+import FooterCard from "@/components/footer/FooterCard";
+import HeaderBar from "@/components/header/HeaderBar";
 export default {
   name: "HomeBody",
   components: {
-    HomeAside
+    FooterCard,
+    HomeAside,
+    HeaderBar
   }
 }
 </script>
@@ -33,6 +41,7 @@ export default {
   color: #333;
   text-align: center;
   height: 100%;
+  min-height: calc(100vh - 79px);
 }
 
 body > .el-container {

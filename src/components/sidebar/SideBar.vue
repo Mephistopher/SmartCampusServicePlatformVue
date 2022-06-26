@@ -11,16 +11,7 @@
           @open="handleOpen"
           @close="handleClose">
 
-        <el-menu-item>
-          <span slot="title">
-            <span style="display: inline-block;
-                  font-size: 20px;
-                  border-bottom: 3px #79bbff solid;
-                  width: 100%;text-align: center">
-              智慧校园服务平台
-            </span>
-          </span>
-        </el-menu-item>
+
 
         <el-menu-item>
           <template slot="title">
