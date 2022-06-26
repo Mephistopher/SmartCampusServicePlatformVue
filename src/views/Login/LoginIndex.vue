@@ -7,16 +7,12 @@
       <el-col :span="8" class="login-col">
         <div class="grid-content bg-white">
           <el-row>
-            <el-col :span="8">
-              <div class="grid-content"></div>
-            </el-col>
-            <el-col :span="8">
+
+
               <p class="login-title">欢迎登录智慧校园服务平台</p>
               <LoginIcon/>
-            </el-col>
-            <el-col :span="8">
-              <div class="grid-content"></div>
-            </el-col>
+
+
           </el-row>
           <el-form :model="ruleForm2" status-icon :rules="rules2" ref="ruleForm2" class="login-form">
             <el-form-item  prop="userNum">
@@ -150,7 +146,7 @@ export default {
 
 .login-title {
   text-align: center;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 600;
   text-transform: uppercase;
   display: inline-block;
