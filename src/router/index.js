@@ -12,7 +12,7 @@ const routes = [
     component: HomeBody
   },
   {
-    path: '/login',
+    path: '/',
     name: 'login',
     component: LoginIndex
   },

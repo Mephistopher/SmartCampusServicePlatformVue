@@ -11,8 +11,25 @@
             <LoginIcon/>
           </el-row>
           <div style="position: absolute;left: 50%;transform: translate(-50%,-50%);bottom: -60px">
-            <LoginForm @userlogin="login"/>
+            <LoginForm @userlogin="callForCaptcha"/>
           </div>
+          <el-dialog title="请输入验证码" :visible.sync="dialogVisible" width="500px" :before-close="handleClose" center>
+            <div class="demo-image" style="transform: translate(40%,0%)">
+              <div class="block">
+                <el-image style="width: 100px; height: 100px" :src="url" fit="contain"></el-image>
+              </div>
+            </div>
+            <br>
+            <el-form :model="form" ref="captchaForm">
+              <el-form-item>
+                <el-input v-model="form.captcha" autocomplete="off"></el-input>
+              </el-form-item>
+            </el-form>
+            <span slot="footer" class="dialog-footer">
+                <el-button @click="dialogVisible = false">取 消</el-button>
+                <el-button type="primary" @click="login">确 定</el-button>
+              </span>
+          </el-dialog>
         </div>
       </el-col>
       <el-col :span="8">
@@ -25,52 +42,83 @@
 <script>
 import LoginIcon from "@/views/Login/LoginIcon";
 import LoginForm from "@/components/loginfrom/LoginForm";
+import {loginNetwork} from "@/network/login";
+import {CHECKSUCCESS, LOGINSUCCESS} from "@/store/mutations-types";
+import {findUserByUserIdStr} from "@/network/user";
 
 export default {
   name: "LoginIndex",
   components: {
     LoginIcon,
     LoginForm
-  },methods:{
-    login(form) {
-      let userName = form.username
-      let userPwd = form.password
-      this.$router.push('./home')
-      // const loading = this.$loading({
-      //   lock: true,
-      //   text: '正在登录',
-      //   spinner: 'el-icon-loading',
-      //   background: 'rgba(0, 0, 0, 0.7)'
-      // })
-      //
-      // loginNetwork(userName, userPwd).then(data =>{
-      //   if(data.code === 200){
-      //     let userIfo = data.result
-      //     this.$store.commit(LOGINSUCCESS, userIfo)
-      //     this.$message.success('登录成功，即将进入系统')
-      //     setTimeout(()=>{
-      //       findUserByUserIdStr(userIfo.userIdStr).then((data)=>{
-      //         if(data.code === 200){
-      //           let user = data.result
-      //
-      //           this.$store.commit(CHECKSUCCESS, {loginUser: user})
-      //         }else {
-      //           this.$message('验证用户失败')
-      //         }
-      //       })
-      //     }, 1500)
-      //   }else{
-      //     //登录失败
-      //    this.$message.error('登录失败, '+data.msg)
-      //   }
-      //
-      // }).catch(e => {
-      //   this.$message.error('出错拉,检查网络试试或联系管理员')
-      // }).finally(()=>{
-      //   loading.close()
-      // })
+  },
+  data() {
+    return {
+      url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg',
+      dialogVisible: false,
+      form: {
+        captcha: '',
+        userName: '',
+        userPwd: ''
+      }
+    }
+  },
+  methods: {
+    callForCaptcha(form) {
+      this.dialogVisible = true;
+      this.userName = form.username
+      this.userPwd = form.password
+    },
+    login() {
+      let captcha = this.form.captcha
+      let userName = this.userName
+      let userPwd = this.userPwd
+      console.log(captcha)
+      console.log(userName)
+      console.log(userPwd)
+      //this.$router.push('/index')
+      const loading = this.$loading({
+        lock: true,
+        text: '正在登录',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      })
+      loginNetwork(userName, userPwd, captcha).then(data =>{
+        if(data.code === 200){
+          let userIfo = data.result
+          this.$store.commit(LOGINSUCCESS, userIfo)
+          this.$message.success('登录成功，即将进入系统')
+          setTimeout(()=>{
+            findUserByUserIdStr(userIfo.userIdStr).then((data)=>{
+              if(data.code === 200){
+                let user = data.result
+                this.$router.push('./home')
+                this.$store.commit(CHECKSUCCESS, {loginUser: user})
+              }else {
+                this.$message('验证用户失败')
+              }
+            })
+          }, 1500)
+        }else{
+          //登录失败
+          this.$message.error('登录失败, '+data.msg)
+        }
+      }).catch(e => {
+        this.$message.error('出错拉,检查网络试试或联系管理员')
+      }).finally(()=>{
+        loading.close()
+      })
+    },
+    handleClose(done) {
+      this.$confirm('确认关闭？')
+          .then(_ => {
+            done();
+          })
+          .catch(_ => {
+          });
     },
   },
+
   beforeCreate() {
     this.$nextTick(() => {
       document.body.setAttribute('style', 'background:#99a9bf')

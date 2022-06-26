@@ -1,27 +1,30 @@
 <template>
-  <div class="login-form">
-    <el-form :model="form" status-icon :rules="rules" ref="loginForm">
-      <div class="login-form-item">
-        <label for="username">
-          学号
-        </label>
-        <el-form-item prop="username">
-          <el-input id="username" placeholder="请输入用户名" v-model="form.username" size="small"></el-input>
-        </el-form-item>
-      </div>
-      <div class="login-form-item">
-        <label for="password" style="position: relative">
-          密码
-          <el-link style="position: absolute; right: 2px" type="danger">忘记密码？</el-link>
-        </label>
-        <el-form-item prop="password">
-          <el-input id="password" placeholder="请输入密码" v-model="form.password" size="small" show-password></el-input>
-        </el-form-item>
-      </div>
-      <div class="login-form-item">
-        <el-button style="width: 100%" @click="login" type="primary" round>登录</el-button>
-      </div>
-    </el-form>
+  <div>
+    <div class="login-form">
+      <el-form :model="form" status-icon :rules="rules" ref="loginForm">
+        <div class="login-form-item">
+          <label for="username">
+            学号
+          </label>
+          <el-form-item prop="username">
+            <el-input id="username" placeholder="请输入用户名" v-model="form.username" size="small"></el-input>
+          </el-form-item>
+        </div>
+        <div class="login-form-item">
+          <label for="password" style="position: relative">
+            密码
+            <el-link style="position: absolute; right: 2px" type="danger">忘记密码？</el-link>
+          </label>
+          <el-form-item prop="password">
+            <el-input id="password" placeholder="请输入密码" v-model="form.password" size="small" show-password></el-input>
+          </el-form-item>
+        </div>
+        <div class="login-form-item">
+          <el-button style="width: 100%" @click="login" type="primary" round>登录</el-button>
+        </div>
+      </el-form>
+    </div>
+
   </div>
 </template>
 
@@ -51,21 +54,11 @@ export default {
       this.$refs['loginForm'].validate((valid) => {
         if (valid) {
           this.$emit('userlogin', this.form)
-          this.$message({
-            showClose: true,
-            message: '登录成功',
-            type: 'success'
-          });
         } else {
-          this.$message({
-            showClose: true,
-            message: '请检查学号和密码',
-            type: 'error'
-          });
           return false;
         }
       })
-    }
+    },
   }
 }
 </script>
