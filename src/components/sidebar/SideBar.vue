@@ -10,7 +10,7 @@
           :unique-opened="true"
           @open="handleOpen"
           @close="handleClose">
-        <el-menu-item>
+        <el-menu-item @click="toHome">
             <i class="el-icon-s-home"></i>
             <span>首页公告</span>
         </el-menu-item>
@@ -75,6 +75,7 @@
         </el-menu-item>
       </el-menu>
     </div>
+
   </div>
 
 </template>
@@ -104,6 +105,7 @@ export default {
   data() {
     return {
       showInfoPath: '/home/showinfo',
+      homePath: '/home',
       isShowAnnounce: true,
 
       createGroupPath: '/index/creategroup',
@@ -131,6 +133,9 @@ export default {
     },
     showInfo() {
       this.$router.push(this.showInfoPath)
+    },
+    toHome() {
+      this.$router.push(this.homePath)
     },
     createGroup() {
       this.$router.push(this.createGroupPath)

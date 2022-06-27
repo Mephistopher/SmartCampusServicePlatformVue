@@ -41,7 +41,7 @@
 
 <script>
 import LoginIcon from "@/views/Login/LoginIcon";
-import LoginForm from "@/components/loginfrom/LoginForm";
+import LoginForm from "@/components/loginform/LoginForm";
 import {loginNetwork} from "@/network/user";
 import {CHECKSUCCESS, LOGINSUCCESS} from "@/store/mutations-types";
 import {findUserByUserIdStr} from "@/network/user";
@@ -115,7 +115,6 @@ export default {
           });
     },
   },
-
   beforeCreate() {
     this.$nextTick(() => {
       document.body.setAttribute('style', 'background:#99a9bf')
@@ -124,7 +123,6 @@ export default {
   beforeDestroy() {
     document.body.removeAttribute('style')
   }
-
 }
 </script>
 

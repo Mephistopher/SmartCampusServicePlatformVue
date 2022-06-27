@@ -112,7 +112,7 @@ export default {
     }
   },
   methods: {
-    submitForm(formName) {
+    submitForm() {
       this.$refs["infoForm"].validate((valid) => {
         if (valid) {
           alert('submit!');
