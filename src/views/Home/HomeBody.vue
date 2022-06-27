@@ -6,7 +6,16 @@
       </el-header>
       <el-container>
         <HomeAside/>
-        <el-main><NoticeWindow/></el-main>
+        <el-main>
+          <el-row :gutter="10">
+            <el-col :span="12">
+              <NoticeWindow/>
+            </el-col>
+            <el-col :span="12">
+              <NewsWindow/>
+            </el-col>
+          </el-row>
+        </el-main>
       </el-container>
     </el-container>
     <FooterCard style="height: 230px"/>
@@ -19,6 +28,7 @@ import HomeAside from "@/views/Home/HomeAside";
 import FooterCard from "@/components/footer/FooterCard";
 import HeaderBar from "@/components/header/HeaderBar";
 import NoticeWindow from "@/components/notice/NoticeWindow"
+import NewsWindow from "@/components/notice/NewsWindow";
 
 export default {
   name: "HomeBody",
@@ -27,6 +37,7 @@ export default {
     HomeAside,
     HeaderBar,
     NoticeWindow,
+    NewsWindow,
   }
 }
 </script>

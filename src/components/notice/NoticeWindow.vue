@@ -3,18 +3,23 @@
     <el-table
         :data="noticeTable"
         stripe
-        style="width: 45%"
+        style="width: 100%"
+        height="288"
         @cell-click="handleCellClick">
-      <el-table-column prop="title" label="通知" width="500" label-class-name="noticeTableTitle" >
+      <el-table-column prop="title" label="通知" width="500">
         <template slot-scope="scope">
-          <span style="margin-left: 10px" @click="showNoticeDetail">{{scope.row.title}}</span>
+          <span style="margin-left: 10px; overflow: hidden;text-overflow:ellipsis;white-space: nowrap;"
+                @click="showNoticeDetail">
+            {{scope.row.title}}</span>
         </template>
       </el-table-column>
       <el-table-column prop="createTime" :formatter="dateFormat">
       </el-table-column>
     </el-table>
-    <el-dialog title="收货地址" :visible.sync="dialogTableVisible">
-      {{ noticeDetail }}
+    <el-dialog :title="noticeTitle" :visible.sync="dialogTableVisible" @closed="clearNoticeDetail">
+      <div style="margin-left: 70%">发布时间：{{noticeCreateTime}}</div>
+      <el-divider></el-divider>
+      <div style="font-size: large; color: #000000" v-html="noticeDetail"></div>
     </el-dialog>
   </div>
 </template>
@@ -26,6 +31,8 @@ export default {
     return {
       dialogTableVisible: false,
       noticeDetail: "",
+      noticeTitle: "",
+      noticeCreateTime: "",
       noticeTable: [{
         id:3,
         title:"公告标题3",
@@ -57,7 +64,20 @@ export default {
       this.dialogTableVisible = true
     },
     handleCellClick(row) {
+      if (this.noticeDetail === ""){
+        let arr = row.detail.split(/[\n]/)
+        for (let i = 0 ; i < arr.length;i++) {
+          let addContent = '<p style="text-indent: 2em">' + arr[i] + '</p>'
+          this.noticeDetail = this.noticeDetail + addContent
+        }
+      }
       this.noticeDetail = row.detail
+      this.noticeTitle = row.title
+      this.noticeCreateTime = row.createTime.replace("T", "  ")
+    },
+    clearNoticeDetail() {
+      this.noticeDetail =""
+      console.log("notice cleared")
     }
   }
 }
