@@ -10,21 +10,14 @@
           :unique-opened="true"
           @open="handleOpen"
           @close="handleClose">
-
-
-
         <el-menu-item>
-          <template slot="title">
             <i class="el-icon-s-home"></i>
             <span>首页公告</span>
-          </template>
         </el-menu-item>
 
-        <el-menu-item>
-          <template slot="title">
+        <el-menu-item @click="showInfo">
             <i class="el-icon-s-custom"></i>
             <span>个人信息</span>
-          </template>
         </el-menu-item>
 
         <el-submenu index="2">
@@ -87,9 +80,8 @@
 </template>
 
 <script>
-// import Announcement from "@/components/announcement/Announcement";
+
 export default {
-  // components: {Announcement},
   name: "Sidebar",
   props: {
     isCollapse: {
@@ -111,6 +103,7 @@ export default {
   },
   data() {
     return {
+      showInfoPath: '/home/showinfo',
       isShowAnnounce: true,
 
       createGroupPath: '/index/creategroup',
@@ -135,6 +128,9 @@ export default {
     },
     handleClose(key, keyPath) {
       console.log(key, keyPath);
+    },
+    showInfo() {
+      this.$router.push(this.showInfoPath)
     },
     createGroup() {
       this.$router.push(this.createGroupPath)
@@ -182,9 +178,6 @@ export default {
     toDeviceModel() {
       window.location.href = 'http://www.ylxteach.net/XM06/wumaojun/device_index.html'
       // window.location.href = 'http://localhost:9000/XM06/wumaojun/device_index.html'
-    },
-    announcementClose() {
-      this.isShowAnnounce = false
     },
   }
 }

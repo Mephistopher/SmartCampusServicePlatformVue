@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import HomeBody from "@/views/Home/HomeBody";
 import LoginIndex from "@/views/Login/LoginIndex";
+import ShowInfoView from "@/views/ShowInfoView";
 
 Vue.use(VueRouter)
 
@@ -15,6 +16,11 @@ const routes = [
     path: '/',
     name: 'login',
     component: LoginIndex
+  },
+  {
+    path: '/home/showinfo',
+    name: 'showinfo',
+    component: ShowInfoView
   },
 ]
 

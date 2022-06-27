@@ -1,29 +1,38 @@
 <template>
   <div>
-    <div style="position: absolute; left: 2%">
+    <div style="position: absolute; left: 15px">
       <span slot="title">
         <span style="display: inline-block;
-              font-size: 20px;
-              width: 100%;text-align: center">
+              font-size: 26px;
+              width: 100%;text-align: center;
+              color: rgba(0, 0, 0, 0.1) !important;
+              -webkit-text-stroke: 1px rgba(0, 0, 150, 0.7);
+              -webkit-text-fill-color: rgba(0, 0, 150, 0.7);
+              -webkit-background-clip: text;">
           智慧校园服务平台
         </span>
       </span>
     </div>
     <div style="position: absolute; left: 79%">
-        <el-button icon="el-icon-date" type="primary" style="height: 60px; border-radius: 0px;bottom: -60px;position: absolute" @click="showScheduleImage">查看作息时间</el-button>
+      <el-button icon="el-icon-date" type="primary"
+                 style="height: 60px; border-radius: 0px;bottom: -60px;position: absolute" @click="showScheduleImage">
+        查看作息时间
+      </el-button>
     </div>
     <div>
-      <el-avatar shape="circle" :size="50" :src="imgsrc2" style="position: absolute; left: 87%; margin-top: 5px;"></el-avatar>
+      <el-avatar shape="circle" :size="50" :src="imgsrc2"
+                 style="position: absolute; left: 87%; margin-top: 5px;"></el-avatar>
     </div>
-    <div style="position: absolute; left: 90%; width: 180px; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;">
-      <span>{{this.Name}}</span>
+    <div
+        style="position: absolute; left: 90%; width: 180px; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;">
+      <span>{{ this.Name }}</span>
     </div>
     <el-dialog
         title="作息时间表"
         :visible.sync="dialogVisible"
         width="50%"
-      center>
-      <el-image :src="imgsrc1" fit="contain" ></el-image>
+        center>
+      <el-image :src="imgsrc1" fit="contain"></el-image>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
       </span>

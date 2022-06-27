@@ -67,7 +67,6 @@ export default {
 .login-form {
   text-align: right;
   padding: 20px 20px;
-  width: 460px;
 }
 
 .login-form-item {

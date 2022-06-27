@@ -10,7 +10,7 @@
             <p class="login-title">欢迎登录智慧校园服务平台</p>
             <LoginIcon/>
           </el-row>
-          <div style="position: absolute;left: 50%;transform: translate(-50%,-50%);bottom: -60px">
+          <div style="position: absolute;left: 50%;transform: translate(-50%,-50%);bottom: -60px; width: 80%">
             <LoginForm @userlogin="callForCaptcha"/>
           </div>
           <el-dialog title="请输入验证码" :visible.sync="dialogVisible" width="500px" :before-close="handleClose" center>

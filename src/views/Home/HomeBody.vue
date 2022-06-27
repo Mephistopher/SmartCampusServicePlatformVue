@@ -1,7 +1,9 @@
 <template>
   <div>
     <el-container>
-      <el-header><HeaderBar/></el-header>
+      <el-header>
+        <HeaderBar/>
+      </el-header>
       <el-container>
         <HomeAside/>
         <el-main>Main</el-main>
@@ -16,6 +18,7 @@
 import HomeAside from "@/views/Home/HomeAside";
 import FooterCard from "@/components/footer/FooterCard";
 import HeaderBar from "@/components/header/HeaderBar";
+
 export default {
   name: "HomeBody",
   components: {
@@ -33,8 +36,6 @@ export default {
   text-align: center;
   line-height: 60px;
 }
-
-
 
 .el-main {
   background-color: #E9EEF3;
