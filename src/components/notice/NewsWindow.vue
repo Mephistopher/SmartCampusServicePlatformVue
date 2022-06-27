@@ -19,7 +19,7 @@
     <el-dialog :title="newsTitle" :visible.sync="dialogTableVisible" @closed="clearNewsDetail">
       <div style="margin-left: 60%">发布时间：{{newsCreateTime}}||点击量{{newsSeeCount}}</div>
       <el-divider></el-divider>
-      <div style="font-size: large" v-html="newsDetail"></div>
+      <div style="font-size: large; text-align: left" v-html="newsDetail"></div>
     </el-dialog>
   </div>
 </template>
@@ -81,6 +81,7 @@ export default {
           this.newsDetail = this.newsDetail + addContent
         }
       }
+      // this.newsDetail = row.detail
       this.newsTitle = row.title
       this.newsSeeCount = row.seeCount
       this.newsCreateTime = row.createTime.replace("T", "  ")
