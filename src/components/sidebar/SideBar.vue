@@ -89,12 +89,6 @@ export default {
     isCollapse: {
       type: Boolean,
       default: false
-    },
-    user: {
-      type: Object,
-      default() {
-        return {userName: 'zhangsan', trueName: '张三'}
-      }
     }
   },
   computed: {
@@ -105,24 +99,9 @@ export default {
   },
   data() {
     return {
-      showInfoPath: '/home/showinfo',
-      homePath: '/home/noticeandnews',
+      showInfoPath: '/showinfo',
+      homePath: '/noticeandnews',
       isShowAnnounce: true,
-
-      createGroupPath: '/index/creategroup',
-      joinInGroupPath: '/index/joiningroup',
-      joinedGroupPath: '/index/joinedgroup',
-      myGroupPath: '/index/mygroup',
-
-      createTaskPath: '/index/createtask',
-      showTaskPath: '/index/showtask',
-      myTaskSubmitRecordPath: '/index/mytasksubmitrecord',
-
-      createProjectPath: '/index/createproject',
-      projectListPath: '/index/projectlist',
-
-      createAnnouncePath: '/index/createannounce',
-      showAnnouncePath: '/index/showannounce'
     }
   },
   methods: {
@@ -137,54 +116,7 @@ export default {
     },
     toHome() {
       this.$router.push(this.homePath)
-    },
-    createGroup() {
-      this.$router.push(this.createGroupPath)
-    },
-    joinInGroup() {
-      this.$router.push(this.joinInGroupPath)
-    },
-    joinedGroup() {
-      this.$router.push(this.joinedGroupPath)
-    },
-    myGroup() {
-      this.$router.push(this.myGroupPath)
-    },
-    createTask() {
-      this.$router.push(this.createTaskPath)
-    },
-    showTask() {
-      this.$router.push(this.showTaskPath)
-    },
-
-    myTaskSubmitRecord() {
-      this.$router.push(this.myTaskSubmitRecordPath)
-    },
-    createProject() {
-      this.$router.push(this.createProjectPath)
-    },
-    projectList() {
-      this.$router.push(this.projectListPath)
-    },
-
-    createAnnounce() {
-      this.$router.push(this.createAnnouncePath)
-    },
-    showAnnounce() {
-      this.$router.push(this.showAnnouncePath)
-    },
-    toConferenceModel() {
-      window.location.href = 'http://www.ylxteach.net/XM06/wumaojun/conference_index.html'
-      // window.location.href = 'http://localhost:9000/XM06/wumaojun/conference_index.html'
-    },
-    toWeatherModel() {
-      window.location.href = 'http://www.ylxteach.net/XM06/wumaojun/weather.html'
-      // window.location.href = 'http://localhost:9000/XM06/wumaojun/weather.html'
-    },
-    toDeviceModel() {
-      window.location.href = 'http://www.ylxteach.net/XM06/wumaojun/device_index.html'
-      // window.location.href = 'http://localhost:9000/XM06/wumaojun/device_index.html'
-    },
+    }
   }
 }
 </script>

@@ -14,12 +14,12 @@ const routes = [
     component: HomeBody,
     children: [
       {
-        path: '/home/showinfo',
+        path: '/showinfo',
         name: 'showinfo',
         component: ShowInfoView
       },
       {
-        path: '/home/noticeandnews',
+        path: '/noticeandnews',
         name: 'noticeandnews',
         component: NoticeAndNews
       }

@@ -24,16 +24,12 @@
     <el-form-item label="宿舍" >
       <span>{{infoForm.dormitory}}</span>
     </el-form-item>
-    <div v-for="(value, index) in infoForm.major" :key="index">
-      <el-form-item label="专业">
-        <span>{{value.name}}</span>
-      </el-form-item>
-    </div>
-    <div v-for="(value, index) in infoForm.collage" :key="index">
-      <el-form-item label="所属学院">
-        <span>{{value.name}}</span>
-      </el-form-item>
-    </div>
+    <el-form-item label="专业">
+      <span>{{infoForm.major.name}}</span>
+    </el-form-item>
+    <el-form-item label="所属学院">
+      <span>{{infoForm.collage.name}}</span>
+    </el-form-item>
     <el-form-item>
       <el-button type="primary" icon="el-icon-edit" @click="submitForm">保存</el-button>
     </el-form-item>
@@ -41,6 +37,8 @@
 </template>
 
 <script>
+import {queryUserInfoNetwork} from "@/network/user";
+
 export default {
   name: "ShowInfo",
   data() {
@@ -82,21 +80,7 @@ export default {
         email: '13456@56.com',
         phone: '13245678910',
         homeAddress: '月球',
-        dormitory: '墓地',
-        major: [{
-          id: '1',
-          name: 'SC',
-        },{
-          id: '2',
-          name: 'CS',
-        },{
-          id: '3',
-          name: 'CT',
-        }],
-        collage: [{
-          id: '1',
-          name: '计算机学院',
-        }]
+        dormitory: '墓地'
       },
       rules: {
         email: [
@@ -122,6 +106,18 @@ export default {
         }
       });
     },
+  },
+
+  created() {
+    var loginUser = this.$store.getters.getLoginUser;
+    queryUserInfoNetwork(loginUser.id).then(res=>{
+      if(res.success){
+        this.infoForm = res.data
+        console.log(this.infoForm)
+      }else{
+        this.$message.error('查询用户信息失败')
+      }
+    })
   }
 }
 </script>

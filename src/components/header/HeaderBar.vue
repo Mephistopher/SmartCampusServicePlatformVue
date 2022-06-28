@@ -13,9 +13,9 @@
         </span>
       </span>
     </div>
-    <div style="position: absolute; left: 79%">
+    <div style="position: absolute; right: 200px">
       <el-button icon="el-icon-date" type="primary"
-                 style="height: 60px; border-radius: 0px;bottom: -60px;position: absolute" @click="showScheduleImage">
+                 style="height: 60px; border-radius: 0px;bottom: -60px;margin-right: 50px" @click="showScheduleImage">
         查看作息时间
       </el-button>
     </div>
@@ -24,7 +24,7 @@
                  style="position: absolute; left: 87%; margin-top: 5px;"></el-avatar>
     </div>
     <div
-        style="position: absolute; left: 90%; width: 180px; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;">
+        style="position: absolute; right: 0; width: 180px; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;">
       <span>{{ this.Name }}</span>
     </div>
     <el-dialog
@@ -51,7 +51,7 @@ export default {
       imgsrc1: img1,
       imgsrc2: img2,
       dialogVisible: false,
-      Name: "我是为了和你相遇才来到这个世界上的"
+      Name: this.$store.getters.getLoginUser.trueName
     }
   },
   methods: {

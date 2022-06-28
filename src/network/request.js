@@ -1,7 +1,24 @@
 import axios from 'axios'
 import {REQUESTAPIURL} from "@/config";
+import {getCookie} from "@/util/cookie";
 
 axios.defaults.withCredentials = true
+
+/**
+ *
+ *
+ * 如果是formdata参数，请在请求参数再加上
+ *         headers: {
+ *             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+ *         },
+ *         // 在请求之前对data传参进行格式转换
+ *         transformRequest: [function(data) {
+ *             data = Qs.stringify(data)
+ *             return data
+ *         }]
+ *
+ *
+ */
 
 /**
  * 网络请求方法
@@ -13,9 +30,11 @@ export function request(config) {
   let baseURL = REQUESTAPIURL
 
   const instance = axios.create({
+      headers:{"Authorization":getCookie('token')},
     baseURL: baseURL,
     timeout: 10000,
-    withCredentials:true,
+      contentType: "application/json; charset=utf-8",
+      withCredentials:true
   })
 
   /*

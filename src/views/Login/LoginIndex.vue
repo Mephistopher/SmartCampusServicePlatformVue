@@ -43,8 +43,9 @@
 import LoginIcon from "@/views/Login/LoginIcon";
 import LoginForm from "@/components/loginform/LoginForm";
 import {loginNetwork} from "@/network/user";
-import {CHECKSUCCESS, LOGINSUCCESS} from "@/store/mutations-types";
-import {findUserByUserIdStr} from "@/network/user";
+import {getCaptchaNetwork} from "@/network/user";
+import {addCookie} from "@/util/cookie";
+
 
 export default {
   name: "LoginIndex",
@@ -67,13 +68,10 @@ export default {
     callForCaptcha(form) {
       this.userName = form.username
       this.userPwd = form.password
-      findUserByUserIdStr(form.username).then((data)=>{
-        if(data.code === 200){
-          // let user = data.result
-          // this.$store.commit(CHECKSUCCESS, {loginUser: user})
-        }else {
-          this.$message('验证用户失败')
-        }
+
+      getCaptchaNetwork(this.userName).then(data=>{
+        console.log(data);
+        this.url = window.URL.createObjectURL(data);
       })
       this.dialogVisible = true;
     },
@@ -81,10 +79,7 @@ export default {
       let captcha = this.form.captcha
       let userName = this.userName
       let userPwd = this.userPwd
-      console.log(captcha)
-      console.log(userName)
-      console.log(userPwd)
-      //this.$router.push('/index')
+
       const loading = this.$loading({
         lock: true,
         text: '正在登录',
@@ -92,13 +87,15 @@ export default {
         background: 'rgba(0, 0, 0, 0.7)'
       })
       loginNetwork(userName, userPwd, captcha).then(data =>{
-        if(data.code === 200){
-          let userIfo = data.result
-          this.$store.commit(LOGINSUCCESS, userIfo)
-          this.$message.success('登录成功，即将进入系统')
-        }else{
-          //登录失败
-          this.$message.error('登录失败, '+data.msg)
+        if(data.success){
+          //设置token到cookie中，
+          addCookie("token", data.data.token)
+          this.$message.success('登录成功')
+
+          this.$store.commit('setLoginUser', data.data)
+          this.$router.push('/home')
+        }else {
+          this.$message.error(data.errorMsg)
         }
       }).catch(e => {
         this.$message.error('出错拉,检查网络试试或联系管理员')

@@ -25,6 +25,9 @@
 </template>
 
 <script>
+
+import {noticeQueryNetwork} from "@/network/notice";
+
 export default {
   name: "noticeWindow",
   data() {
@@ -79,6 +82,14 @@ export default {
       this.noticeDetail =""
       console.log("notice cleared")
     }
+  },
+  created() {
+    noticeQueryNetwork(1).then(res=>{
+      console.log(res)
+      if(res.success){
+        this.noticeTable = res.data.records
+      }
+    })
   }
 }
 </script>
