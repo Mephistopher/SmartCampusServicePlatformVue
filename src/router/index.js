@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import HomeBody from "@/views/Home/HomeBody";
 import LoginIndex from "@/views/Login/LoginIndex";
 import ShowInfoView from "@/views/ShowInfoView";
+import NoticeAndNews from "@/views/NoticeAndNews";
 
 Vue.use(VueRouter)
 
@@ -10,18 +11,26 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: HomeBody
+    component: HomeBody,
+    children: [
+      {
+        path: '/home/showinfo',
+        name: 'showinfo',
+        component: ShowInfoView
+      },
+      {
+        path: '/home/noticeandnews',
+        name: 'noticeandnews',
+        component: NoticeAndNews
+      }
+    ]
   },
   {
     path: '/',
     name: 'login',
     component: LoginIndex
   },
-  {
-    path: '/home/showinfo',
-    name: 'showinfo',
-    component: ShowInfoView
-  },
+
 ]
 
 const router = new VueRouter({

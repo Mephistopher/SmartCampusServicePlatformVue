@@ -6,8 +6,8 @@
               font-size: 26px;
               width: 100%;text-align: center;
               color: rgba(0, 0, 0, 0.1) !important;
-              -webkit-text-stroke: 1px rgba(0, 0, 150, 0.7);
-              -webkit-text-fill-color: rgba(0, 0, 150, 0.7);
+              -webkit-text-stroke: 1px rgba(255,255,255, 0.7);
+              -webkit-text-fill-color: rgba(255,255,255, 0.7);
               -webkit-background-clip: text;">
           智慧校园服务平台
         </span>

@@ -5,68 +5,69 @@
           :collapse="isCollapse"
           default-active="1"
           class="el-menu-vertical-demo"
-          background-color="transparent"
-          active-text-color="#409BFF"
+          text-color="#333333"
+          background-color="#FFFFFF"
+          active-text-color="#409EFF"
           :unique-opened="true"
           @open="handleOpen"
           @close="handleClose">
-        <el-menu-item @click="toHome">
+        <el-menu-item index="1" @click="toHome">
             <i class="el-icon-s-home"></i>
             <span>首页公告</span>
         </el-menu-item>
 
-        <el-menu-item @click="showInfo">
+        <el-menu-item index="2" @click="showInfo">
             <i class="el-icon-s-custom"></i>
             <span>个人信息</span>
         </el-menu-item>
 
-        <el-submenu index="2">
+        <el-submenu index="3">
           <template slot="title">
             <i class="el-icon-s-grid"></i>
             <span>课程表</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="4-1" @click="createAnnounce">查看课表</el-menu-item>
-            <el-menu-item index="4-2" @click="showAnnounce">课程信息查询</el-menu-item>
-          </el-menu-item-group>
-        </el-submenu>
-
-        <el-submenu index="3">
-          <template slot="title">
-            <i class="el-icon-s-order"></i>
-            <span>课程情况</span>
-          </template>
-          <el-menu-item-group>
-            <el-menu-item index="2-1" @click="createTask">已修读学分</el-menu-item>
-            <el-menu-item index="2-2" @click="showTask">不及格课程情况</el-menu-item>
-            <el-menu-item index="2-3" @click="myTaskSubmitRecord">查看选课情况</el-menu-item>
+            <el-menu-item index="3-1" @click="createAnnounce">查看课表</el-menu-item>
+            <el-menu-item index="3-2" @click="showAnnounce">课程信息查询</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
         <el-submenu index="4">
           <template slot="title">
-            <i class="el-icon-s-finance"></i>
-            <span>我的成绩</span>
+            <i class="el-icon-s-order"></i>
+            <span>课程情况</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="3-1" @click="createProject">成绩查询</el-menu-item>
-            <el-menu-item index="3-2" @click="projectList">补考重修成绩</el-menu-item>
+            <el-menu-item index="4-1" @click="createTask">已修读学分</el-menu-item>
+            <el-menu-item index="4-2" @click="showTask">不及格课程情况</el-menu-item>
+            <el-menu-item index="4-3" @click="myTaskSubmitRecord">查看选课情况</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
         <el-submenu index="5">
           <template slot="title">
-            <i class="el-icon-s-finance"></i>
+            <i class="el-icon-s-check"></i>
+            <span>我的成绩</span>
+          </template>
+          <el-menu-item-group>
+            <el-menu-item index="5-1" @click="createProject">成绩查询</el-menu-item>
+            <el-menu-item index="5-2" @click="projectList">补考重修成绩</el-menu-item>
+          </el-menu-item-group>
+        </el-submenu>
+
+        <el-submenu index="6">
+          <template slot="title">
+            <i class="el-icon-s-platform"></i>
             <span>登录助手</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="3-1" @click="createProject">登录教务系统</el-menu-item>
-            <el-menu-item index="3-2" @click="projectList">登录迎新系统</el-menu-item>
+            <el-menu-item index="6-1" @click="createProject">登录教务系统</el-menu-item>
+            <el-menu-item index="6-2" @click="projectList">登录迎新系统</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
 
-        <el-menu-item>
+        <el-menu-item index="7">
           <div style="height: 100%;width: 100%"
                @click="toConferenceModel">
             <i class="el-icon-s-opportunity"></i>
@@ -105,7 +106,7 @@ export default {
   data() {
     return {
       showInfoPath: '/home/showinfo',
-      homePath: '/home',
+      homePath: '/home/noticeandnews',
       isShowAnnounce: true,
 
       createGroupPath: '/index/creategroup',
@@ -193,7 +194,7 @@ export default {
   height: calc(100vh - 79px);
   overflow: hidden;
   position: relative;
-  border-bottom: 0px;
+  border-bottom: 0;
   border-top: 2px solid #409EFF;
   border-right: 1px solid rgba(100, 100, 100, 0.7);
 }
@@ -204,12 +205,11 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  bottom: 0px;
+  bottom: 0;
   overflow-y: hidden;
   overflow-x: hidden;
 }
 .sidebar-menu::-webkit-scrollbar {
   display: none;
 }
-/*.el-menu-item*/
 </style>

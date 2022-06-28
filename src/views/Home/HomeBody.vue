@@ -7,14 +7,7 @@
       <el-container>
         <HomeAside/>
         <el-main>
-          <el-row :gutter="10">
-            <el-col :span="12">
-              <NoticeWindow/>
-            </el-col>
-            <el-col :span="12">
-              <NewsWindow/>
-            </el-col>
-          </el-row>
+          <router-view/>
         </el-main>
       </el-container>
     </el-container>
@@ -27,8 +20,6 @@
 import HomeAside from "@/views/Home/HomeAside";
 import FooterCard from "@/components/footer/FooterCard";
 import HeaderBar from "@/components/header/HeaderBar";
-import NoticeWindow from "@/components/notice/NoticeWindow"
-import NewsWindow from "@/components/notice/NewsWindow";
 
 export default {
   name: "HomeBody",
@@ -36,8 +27,6 @@ export default {
     FooterCard,
     HomeAside,
     HeaderBar,
-    NoticeWindow,
-    NewsWindow,
   }
 }
 </script>
