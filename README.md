@@ -1,0 +1,2 @@
+# SmartCampusServicePlatformVue
+2022川大华迪实训项目
