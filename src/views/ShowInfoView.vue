@@ -2,7 +2,6 @@
   <div>
     <ShowInfo/>
   </div>
-
 </template>
 
 <script>

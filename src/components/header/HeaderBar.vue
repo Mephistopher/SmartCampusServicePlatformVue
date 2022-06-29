@@ -4,27 +4,28 @@
       <span slot="title">
         <span style="display: inline-block;
               font-size: 26px;
+              font-weight: bold;
               width: 100%;text-align: center;
-              color: rgba(0, 0, 0, 0.1) !important;
-              -webkit-text-stroke: 1px rgba(255,255,255, 0.7);
-              -webkit-text-fill-color: rgba(255,255,255, 0.7);
+              color: rgba(0, 0, 0, 0) !important;
+              -webkit-text-stroke: 1px rgba(255,255,255, 0);
+              -webkit-text-fill-color: rgba(25,137,250, 0.7);
               -webkit-background-clip: text;">
           智慧校园服务平台
         </span>
       </span>
     </div>
-    <div style="position: absolute; left: 79%">
+    <div style="position: absolute; right: 200px; margin-bottom: 2px">
       <el-button icon="el-icon-date" type="primary"
-                 style="height: 60px; border-radius: 0px;bottom: -60px;position: absolute" @click="showScheduleImage">
+                 style="height: 59px; border-radius: 0px;bottom: -60px;margin-right: 50px" @click="showScheduleImage">
         查看作息时间
       </el-button>
     </div>
     <div>
       <el-avatar shape="circle" :size="50" :src="imgsrc2"
-                 style="position: absolute; left: 87%; margin-top: 5px;"></el-avatar>
+                 style="position: absolute; left: 89%; margin-top: 5px;"></el-avatar>
     </div>
     <div
-        style="position: absolute; left: 90%; width: 180px; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;">
+        style="position: absolute; right: 0; width: 180px; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;">
       <span>{{ this.Name }}</span>
     </div>
     <el-dialog
@@ -51,7 +52,7 @@ export default {
       imgsrc1: img1,
       imgsrc2: img2,
       dialogVisible: false,
-      Name: "我是为了和你相遇才来到这个世界上的"
+      Name: this.$store.getters.getLoginUser.trueName
     }
   },
   methods: {

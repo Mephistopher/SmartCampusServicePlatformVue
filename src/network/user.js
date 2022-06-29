@@ -1,129 +1,67 @@
 import {request} from "./request";
+import Qs from 'qs'
 
-/**
- * 登录方法
- * @param userName 用户名
- * @param userPwd 密码
- * @param captcha 验证码
- * @returns ‘{
-    "msg": "登录成功",
-    "code": 200,
-    "result": {
-        "userIdStr": "##gM5MjM##QOzkTN1EDM5MjMzYTM",
-        "username": "lisi",
-        "trueName": "李四"
-    }}’
- */
+
+export function getCaptchaNetwork(userName){
+    return request({
+        url: '/user/getCaptchaImg',
+        method: 'post',
+        data:{
+            'idNumber': userName
+        },
+        responseType: "blob",
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        // 在请求之前对data传参进行格式转换
+        transformRequest: [function(data) {
+            data = Qs.stringify(data)
+            return data
+        }]
+    })
+}
+
 export function loginNetwork(userName, userPwd, captcha){
   return request({
     url: '/user/login',
-    params: {
-      userName,
-      userPwd,
-      captcha
-    }
+      method:'post',
+        data:{
+            "idNumber": userName,
+            "password": userPwd,
+            "code":captcha
+        }
   })
 }
 
 /**
- * 根据用户的字符串id 查找用户
- * @param userIdStr
- * @returns {AxiosPromise}
+ * {
+ *   "queryType": 7,
+ *   "userId": 1011,
+ *   "idNumber": "123123"
+ * }
  */
-export function findUserByUserIdStr(userIdStr){
-  return request({
-    url: '/user/findByIdStr',
-    params: {
-      userIdStr
-    },
-    method: 'post'
-  })
+export function queryUserInfoNetwork(userId, idNumber){
+    return request({
+        url:'/user/userInfo',
+        method: 'post',
+        data:{
+            queryType: 7,
+            userId,
+            idNumber
+        }
+    })
 }
 
-/**
- * 创建用户
- * @param user
- * @returns {AxiosPromise}
- */
-export function createAccount(user) {
-  return request({
-    url: '/user/add',
-    params: {
-      userName: user.userName,
-      userPwd: user.userPwd,
-      trueName: user.trueName,
-      email: user.email,
-      phone: user.phone
-    },
-    method: 'post'
-  })
+export function updateUserInfoNetwork(userId, phone, email, homeAddress) {
+    return request({
+        url:'/user/alterUserInfo',
+        method: 'post',
+        data:{
+            userId,
+            phone,
+            email,
+            homeAddress
+        }
+    })
 }
 
-/**
- * 修改密码
- * @param from
- * @returns {AxiosPromise}
- */
-export function alterPwdNetwork(from){
-  return request({
-    url: '/user/alterPassword',
-    params: {
-      id: from.id,
-      oldPwd: from.oldPwd,
-      newPwd: from.newPwd,
-      confirmPwd: from.confirmPwd
-    },
-    method: 'post'
-  })
-}
-
-/**
- * 根据id查找用户
- * @param userId
- * @returns {AxiosPromise}
- */
-export function queryUserByIdNetwork(userId){
-  return request({
-    url: '/user/queryUserById',
-    params: {
-      userId
-    },
-    method: 'post'
-  })
-}
-
-/**
- * 修改用户信息网络请求
- *    id必传
- *    其他修改项需要传则给出值，不需要赋值为null
- * @param user
- */
-export function alterUserInfoNetwork(user){
-  return request({
-    url: '/user/alterUserInfo',
-    data:{
-      id: user.id,
-      trueName: user.trueName,
-      phone: user.phone,
-      userName: user.userName
-    },
-    method: 'post'
-  })
-}
-
-/**
- * 注销用户网络请求
- * @param userId
- * @param userPwd
- * @returns {AxiosPromise}
- */
-export function dropUserNetwork(userId, userPwd){
-  return request({
-    url:'/user/dropUser',
-    data:{
-      id: userId,
-      userPwd
-    },
-    method: 'post'
-  })
-}
