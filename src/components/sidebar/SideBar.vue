@@ -8,9 +8,7 @@
           text-color="#333333"
           background-color="#FFFFFF"
           active-text-color="#409EFF"
-          :unique-opened="true"
-          @open="handleOpen"
-          @close="handleClose">
+          :unique-opened="true">
         <el-menu-item index="1" @click="toHome">
             <i class="el-icon-s-home"></i>
             <span>首页公告</span>
@@ -38,9 +36,9 @@
             <span>课程情况</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="4-1">已修读学分</el-menu-item>
-            <el-menu-item index="4-2">不及格课程情况</el-menu-item>
-            <el-menu-item index="4-3">查看选课情况</el-menu-item>
+            <el-menu-item @click="toTakeCourse" >修读总揽</el-menu-item>
+            <el-menu-item @click="toUnpassCourse">不及格课程</el-menu-item>
+            <el-menu-item >查看选课情况</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
@@ -100,21 +98,24 @@ export default {
     return {
       showInfoPath: '/showinfo',
       homePath: '/noticeandnews',
+      takeCoursePath: '/takecourse',
+      unpassCoursePath: '/unpassCourse',
       isShowAnnounce: true,
     }
   },
   methods: {
-    handleOpen(key, keyPath) {
-      console.log(key, keyPath);
-    },
-    handleClose(key, keyPath) {
-      console.log(key, keyPath);
-    },
+
     showInfo() {
       this.$router.push(this.showInfoPath)
     },
     toHome() {
       this.$router.push(this.homePath)
+    },
+    toTakeCourse(){
+      this.$router.push(this.takeCoursePath)
+    },
+    toUnpassCourse(){
+      this.$router.push(this.unpassCoursePath)
     }
   }
 }

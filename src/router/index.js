@@ -7,9 +7,17 @@ import NoticeAndNews from "@/views/NoticeAndNews";
 import NoticeList from "@/components/notice/NoticeList";
 import NewsList from "@/components/notice/NewsList";
 
+const TakeCourse = () => import('@/views/CourseSituation/TakeCourse')
+const UnpassCourse = () => import('@/views/CourseSituation/UnpassCourse')
+
 Vue.use(VueRouter)
 
 const routes = [
+  {
+    path: '/',
+    name: 'login',
+    component: LoginIndex
+  },
   {
     path: '/home',
     name: 'home',
@@ -35,13 +43,18 @@ const routes = [
         name:'newslist',
         component: NewsList
       },
+      {
+        path: '/takecourse',
+        name: '已修读学分',
+        component: TakeCourse
+      },
+      {
+        path: '/unpasscourse',
+        name: '不及格的课程',
+        component: UnpassCourse
+      }
     ]
-  },
-  {
-    path: '/',
-    name: 'login',
-    component: LoginIndex
-  },
+  }
 
 ]
 
