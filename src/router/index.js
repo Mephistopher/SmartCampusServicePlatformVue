@@ -1,4 +1,9 @@
+
+
 import Vue from 'vue'
+
+Vue.use(VueRouter)
+
 import VueRouter from 'vue-router'
 import HomeBody from "@/views/Home/HomeBody";
 import LoginIndex from "@/views/Login/LoginIndex";
@@ -9,8 +14,9 @@ import NewsList from "@/components/notice/NewsList";
 
 const TakeCourse = () => import('@/views/CourseSituation/TakeCourse')
 const UnpassCourse = () => import('@/views/CourseSituation/UnpassCourse')
+const SelectCourse = () => import('@/views/CourseSituation/SelectCourse')
 
-Vue.use(VueRouter)
+
 
 const routes = [
   {
@@ -52,6 +58,11 @@ const routes = [
         path: '/unpasscourse',
         name: '不及格的课程',
         component: UnpassCourse
+      },
+      {
+        path: '/selectcourse',
+        name: '选课',
+        component: SelectCourse
       }
     ]
   }

@@ -138,7 +138,6 @@ export default {
         this.$message.error('查询不及格课程失败,'+res.errorMsg)
         return
       }
-      console.log(res.data)
       this.unPassCourse = res.data
     })
   }
