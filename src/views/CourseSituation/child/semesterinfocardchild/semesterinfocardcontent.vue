@@ -5,21 +5,28 @@
     计划要求
   </h5>
   <el-row :gutter="12" style="font-size: 18px">
-    <el-col :span="8">
+    <el-col :span="6">
       <el-card shadow="hover" :body-style="{'backgroundColor':'#a1bb4a','color':'#ffffff'}">
         <span class="semester-info-card-little-font">修读学分:</span>
+        {{getedCredit}}
       </el-card>
     </el-col>
-    <el-col :span="8">
+    <el-col :span="6">
+      <el-card shadow="hover" :body-style="{'backgroundColor':'#a1bb4a','color':'#ffffff'}">
+        <span class="semester-info-card-little-font">未修读学分:</span>
+        {{unGetedCredit}}
+      </el-card>
+    </el-col>
+    <el-col :span="6">
       <el-card shadow="hover" :body-style="{'backgroundColor':'#7fb1dc','color':'#ffffff'}">
         <span class="semester-info-card-little-font">修读门次:</span>
         {{item.length}}
       </el-card>
     </el-col>
-    <el-col :span="8">
+    <el-col :span="6">
       <el-card shadow="hover" :body-style="{'backgroundColor':'#999999','color':'#ffffff'}">
         <span class="semester-info-card-little-font">未通过门次:</span>
-        {{unCrossCourse(item)}}
+        {{unCrossCourse}}
       </el-card>
     </el-col>
   </el-row>
@@ -54,6 +61,8 @@
 </template>
 
 <script>
+import {queryUserCreditNetwork} from "@/network/course";
+
 export default {
   name: "semesterinfocardcontent",
   props:{
@@ -73,16 +82,36 @@ export default {
           "deleted": 0
         }]
       }
+    },
+    creditInfo:{
+      type: Object,
+      default() {
+        return null;
+      }
     }
   },
   computed:{
     unCrossCourse(){
-      return courses=>{
-        let unCross = 0
-        for (let cours of courses) {
-          if(cours.score < 60) unCross++
+      if(this.creditInfo != null){
+        return this.creditInfo.unPassCount
+      }
+    },
+    getedCredit() {
+      if (this.creditInfo != null) {
+        let r = 0
+        for (let pass of this.creditInfo.pass) {
+          r += pass.credit
         }
-        return unCross
+        return r
+      }
+    },
+    unGetedCredit(){
+      if (this.creditInfo != null) {
+        let r = 0
+        for (let pass of this.creditInfo.unPass) {
+          r += pass.credit
+        }
+        return r
       }
     }
   }

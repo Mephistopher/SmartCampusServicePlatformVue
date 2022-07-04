@@ -4,9 +4,6 @@
     <el-descriptions-item label="课程名">{{realCourseInfo.courseName}}</el-descriptions-item>
     <el-descriptions-item label="学分">{{realCourseInfo.credit}}</el-descriptions-item>
     <el-descriptions-item label="上课位置">{{realCourseInfo.location}}</el-descriptions-item>
-    <el-descriptions-item label="专业">
-      <el-tag size="small"></el-tag>
-    </el-descriptions-item>
     <el-descriptions-item>
       <div slot="label" style="margin: auto">上课时间</div>
       <span>第{{realCourseInfo.startWeek}}周～{{realCourseInfo.endWeek}}周</span>

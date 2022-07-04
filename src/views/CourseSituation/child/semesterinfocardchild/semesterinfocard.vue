@@ -1,10 +1,19 @@
 <template>
 <div class="semester-info-card">
-  <el-tabs type="border-card" @tab-click="clickSemesterTab">
+  <el-tabs type="border-card" @tab-click="clickSemesterTab" >
+    <el-tab-pane label="提示" closable>
+      <div class="semester-info-card-start-page">
+        这是一段提示信息
+      </div>
+    </el-tab-pane>
+
     <el-tab-pane  v-for="semester in semesters"
+                  :lazy="true"
                   :semester="semester"
                   :label="semester">
-      <semesterinfocardcontent :item="courseMem[currentSemester]"/>
+      <semesterinfocardcontent :item="courseMem[currentSemester]"
+                              :credit-info="creditMem[currentSemester]"
+      />
     </el-tab-pane>
   </el-tabs>
 
@@ -13,7 +22,7 @@
 
 <script>
 import Semesterinfocardcontent from "@/views/CourseSituation/child/semesterinfocardchild/semesterinfocardcontent";
-import {querySemesterCourseNetwork} from "@/network/course";
+import {querySemesterCourseNetwork, queryUserCreditNetwork} from "@/network/course";
 
 export default {
   name: "semesterinfocard",
@@ -31,8 +40,8 @@ export default {
   data(){
     return {
       courseMem: {},
+      creditMem: {},
       currentSemester: '',
-
     }
   },
   methods:{
@@ -40,6 +49,21 @@ export default {
       let semester = p.$attrs.semester
       let userId = this.$store.getters.getLoginUser.id
       this.querySemesterCourse(semester, userId)
+
+      this.querySemesterCreditInfo(semester,userId)
+    },
+    querySemesterCreditInfo(semester, userId){
+      if(semester == null || userId == null) return
+      if(this.creditMem[semester] === undefined || this.creditMem[semester] === null){
+        queryUserCreditNetwork(userId, semester).then(res=>{
+          if(res.success) {
+            this.creditMem[semester] = res.data
+            this.currentSemester = semester
+          }
+        })
+      }else {
+        this.currentSemester = semester
+      }
     },
     querySemesterCourse(semester, userId){
       if(semester == null || userId == null) return
@@ -61,5 +85,8 @@ export default {
 <style scoped>
 .semester-info-card-little-font{
   font-size: 13px;
+}
+.semester-info-card-start-page{
+  min-height: 500px;
 }
 </style>

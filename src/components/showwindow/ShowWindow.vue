@@ -61,7 +61,7 @@ export default {
 .show-window{
   width: calc(100% - 14px);
   border: 2px solid rgba(100,100,100,0.5);
-  background-color: transparent;
+  background-color: #ffffff;
   margin-top: 5px;
   margin-left: 8px;
   border-radius: 12px;

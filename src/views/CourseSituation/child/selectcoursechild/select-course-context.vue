@@ -79,7 +79,13 @@
     <el-table-column
         align="right">
       <template slot="header" slot-scope="scope">
-        <el-button @click="selectCourseBatch">选择选中课程</el-button>
+        <el-input
+            size="mini"
+            style="width: 50%"
+            v-model="search"
+            placeholder="输入关键词搜索"/>
+
+        <el-button size="mini" type="warning" @click="selectCourseBatch">选择选中课程</el-button>
       </template>
 
       <template slot-scope="scope">
@@ -102,15 +108,14 @@
     </el-table-column>
   </el-table>
 
-
-
+<br/>
 
   <el-pagination
       @current-change="handleCurrentChange"
       :current-page.sync="currentPage"
-      :page-size="20"
+      :page-size="pageSize"
       layout="total, prev, pager, next"
-      :total="total">
+      :total="totalRecord">
   </el-pagination>
 </div>
 </template>
@@ -164,12 +169,26 @@ export default {
         }
       }
     },
-    total(){
-      return this.courseList.length
-    },
     currentCourseList(){
       return pageNum=>{
-        let totalRecord = this.courseList.length
+        const search = this.search
+        let totalRecord = 0
+        let courseList = []
+
+
+        if (search) {
+          courseList = this.courseList.filter(data => {
+            return  Object.keys(data).some(key => {
+              return  String(data[key]).toLowerCase().indexOf(search) > -1
+            })
+          })
+        }else {
+          courseList = this.courseList
+        }
+
+        totalRecord = courseList.length
+        this.totalRecord = totalRecord
+
         if (totalRecord % this.pageSize === 0){
           this.pages = totalRecord / this.pageSize
         }else {
@@ -184,17 +203,26 @@ export default {
           begin = (pageNum - 1) * this.pageSize
           end = totalRecord
         }
-        return this.courseList.slice(begin, end)
+        return courseList.slice(begin, end)
       }
+    },
+    tables () {
+
+      return this.unPassCourse
     }
   },
   data(){
     return {
+
+      search: '',
+
+
       userId: this.$store.getters.getLoginUser.id,
       multipleSelection: [],
       stockMem:{},
       selectedMem:{},
       currentPage: 1,
+      totalRecord: 0,
       pageSize: 20,
       pages: 0
     }

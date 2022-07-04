@@ -39,7 +39,6 @@
             <el-menu-item @click="toTakeCourse" >修读总揽</el-menu-item>
             <el-menu-item @click="toUnpassCourse">不及格课程</el-menu-item>
             <el-menu-item @click="selectCourse">选课</el-menu-item>
-            <el-menu-item @click="selectedCourse">本学期已选课程</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 

@@ -9,7 +9,8 @@
     </div>
     <div slot="main">
 
-      <select-course-query-bar @queryCurrentCourse="queryCurrentCourse"/>
+      <select-course-query-bar @queryCurrentCourse="queryCurrentCourse"
+                               @showMySelected="showMySelected"/>
 
       <el-divider></el-divider>
 
@@ -37,11 +38,63 @@
     <el-button type="info" @click="dialogVisible = false">确 定</el-button>
   </el-dialog>
 
+
+  <el-drawer
+      title="已选择的课程"
+      :visible.sync="drawer"
+      direction="rtl"
+      :before-close="handleClose">
+    <el-collapse style="padding: 0 20px" accordion>
+
+      <el-collapse-item
+          v-for="(course, index) in selectedCourse"
+          :name="index">
+        <template slot="title">
+          <span class="select-course-selected-title">{{course.courseName}}</span>
+          <span>{{course.credit}}</span>学分
+        </template>
+          <el-descriptions title="课程详情" :column="1">
+            <template slot="extra">
+                <el-button @click="cancelSelectCourse(course.id)"
+                           size="mini" type="warning">
+                  取消选课
+                </el-button>
+            </template>
+            <el-descriptions-item label="课程号">{{course.id}}</el-descriptions-item>
+            <el-descriptions-item label="课程名">{{ course.courseName }}</el-descriptions-item>
+            <el-descriptions-item label="学期">{{ course.semester }}</el-descriptions-item>
+            <el-descriptions-item label="备注">{{course.detail}}</el-descriptions-item>
+            <el-descriptions-item label="上课地址">{{course.location}}</el-descriptions-item>
+            <el-descriptions-item>
+              <div slot="label" style="margin: auto">上课时间</div>
+              <span>第{{course.startWeek}}周～{{course.endWeek}}周</span>
+              <el-tag v-for="time in course.courseTimeList"
+                      style="margin: 10px"
+                      size="mini">
+                星期{{time.day}}第{{time.id%12}}节
+              </el-tag>
+            </el-descriptions-item>
+            <el-descriptions-item label="上课老师">
+              <div slot="label" style="margin: auto">上课老师</div>
+              <div>
+                <el-tag type="success" v-for="teacher in course.teacherList">{{teacher.trueName}}</el-tag>
+              </div>
+            </el-descriptions-item>
+          </el-descriptions>
+      </el-collapse-item>
+    </el-collapse>
+  </el-drawer>
 </div>
 </template>
 
 <script>
-import {selectCourseNetwork, queryCurSemesterCourseNetwork, queryUsedTimeNetwork} from "@/network/course";
+import {
+  selectCourseNetwork,
+  queryCurSemesterCourseNetwork,
+  queryUsedTimeNetwork,
+  queryNowSelectedCourseNetwork,
+  queryCourseTotalInfoByIdsNetwork, cancelSelectCourseNetwork
+} from "@/network/course";
 import SelectCourseQueryBar from "@/views/CourseSituation/child/selectcoursechild/SelectCourseQueryBar";
 import ShowWindow from "@/components/showwindow/ShowWindow";
 import SelectCourseContext from "@/views/CourseSituation/child/selectcoursechild/select-course-context";
@@ -52,11 +105,14 @@ export default {
   components: {SelectCourseResult, SelectCourseContext, ShowWindow, SelectCourseQueryBar},
   data(){
     return {
-      courseList:[],
       dialogVisible: false,
-      courses: [],
+      drawer: false,
 
-      usedTime:[]
+      courseList:[],
+      courses: [],
+      usedTime:[],
+
+      selectedCourse: []
     }
   },
   methods:{
@@ -94,6 +150,43 @@ export default {
     selectBatch(courses){
       this.dialogVisible = true
       this.courses = courses
+    },
+    cancelSelectCourse(courseId){
+      this.$confirm('确定取消课选课？')
+        .then(_ => {
+          let userId = this.$store.getters.getLoginUser.id
+          cancelSelectCourseNetwork(courseId, userId).then(res=>{
+            if(res.success){
+              this.$message.success('取消选课成功')
+            }else {
+              this.$message.error('取消选课失败,'+res.errorMsg)
+            }
+          })
+          done()
+        })
+        .catch(_ => {})
+    },
+    showMySelected(){
+      this.drawer = true
+      let userId = this.$store.getters.getLoginUser.id
+      queryNowSelectedCourseNetwork(userId).then(res=>{
+        if(!res.success){
+          this.$message.error('查询已选课程失败')
+          return
+        }
+        let arr = res.data
+        let courseIds = []
+        for (let a of arr) {
+          courseIds.push(a.courseId)
+        }
+        return queryCourseTotalInfoByIdsNetwork(courseIds)
+      }).then(res=>{
+        if(!res.success) {
+          this.$message.error('查询已选课程失败')
+          return
+        }
+        this.selectedCourse = res.data
+      })
     }
   },
   mounted() {
@@ -111,5 +204,11 @@ export default {
 <style scoped>
 .select-course-result-card{
   min-height: 300px;
+}
+
+.select-course-selected-title{
+  display: inline-block;
+  width: 60%;
+  font-weight: 900;
 }
 </style>

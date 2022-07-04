@@ -19,6 +19,23 @@ export function querySemesterCourseNetwork(userId, semester){
 }
 
 /**
+ * 查询用户学分情况，
+ *  选传semester（学期），不穿代表查询全部
+ * @param userId
+ * @param semester
+ */
+export function queryUserCreditNetwork(userId, semester){
+    return request({
+        url: '/courseRecord/queryUserCredit',
+        data: {
+            userId,
+            semester
+        },
+        method: 'post'
+    })
+}
+
+/**
  * 查询不及格的课程
  * @param userId
  */
@@ -165,6 +182,55 @@ export function queryUsedTimeNetwork(userId){
         }],
         url: '/selectCourse/queryUserCourseTime',
         data: {
+            userId
+        },
+        method: 'post'
+    })
+}
+
+
+/**
+ * 查询用户当前选课阶段选到的课
+ * @param userId
+ * @returns {AxiosPromise}
+ */
+export function queryNowSelectedCourseNetwork(userId){
+    return request({
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        // 在请求之前对data传参进行格式转换
+        transformRequest: [function(data) {
+            data = Qs.stringify(data)
+            return data
+        }],
+        url: '/selectCourse/userSeckillCourseId',
+        data: {
+            userId
+        },
+        method: 'post'
+    })
+}
+
+
+/**
+ * 取消选课
+ * @param courseId
+ * @param userId
+ */
+export function cancelSelectCourseNetwork(courseId, userId){
+    return request({
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8'
+        },
+        // 在请求之前对data传参进行格式转换
+        transformRequest: [function(data) {
+            data = Qs.stringify(data)
+            return data
+        }],
+        url: '/selectCourse/cancelSeckillCourse',
+        data:{
+            courseId,
             userId
         },
         method: 'post'

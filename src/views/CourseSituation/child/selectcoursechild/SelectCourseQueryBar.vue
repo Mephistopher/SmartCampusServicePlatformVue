@@ -22,6 +22,7 @@
     <el-button slot="append" icon="el-icon-search" @click="queryCourse"></el-button>
   </el-input>
 
+  <el-button size="mini" @click="showMySelected">查看已选择的课程</el-button>
 </div>
 </template>
 
@@ -45,6 +46,9 @@ export default {
         type: this.select,
         context: this.queryContext
       })
+    },
+    showMySelected(){
+      this.$emit('showMySelected')
     }
   }
 }
