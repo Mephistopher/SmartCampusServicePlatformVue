@@ -53,7 +53,7 @@
                   <div style="margin-left: 15px">
                     <div v-for="item in scope.row.courseTimeList">
                       <el-tag type="info" size="mini">
-                        星期{{item.day}}第{{item.id%12}}节,{{item.startTime}}到{{item.endTime}}
+                        星期{{item.day}}第{{item.id%12===0?12:item.id%12}}节,{{item.startTime}}到{{item.endTime}}
                       </el-tag>
                     </div>
                   </div>
