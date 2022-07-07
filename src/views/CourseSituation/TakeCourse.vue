@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
 <div>
   <show-window>
