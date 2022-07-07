@@ -79,7 +79,7 @@
         </el-submenu>
 
 
-        <el-menu-item index="8">
+        <el-menu-item index="8" @click="showCampusResource">
           <div style="height: 100%;width: 100%">
             <i class="el-icon-s-opportunity"></i>
             <span>校内资源访问</span>
