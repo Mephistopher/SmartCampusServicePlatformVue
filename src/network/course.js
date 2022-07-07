@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import {request} from "@/network/request";
 import Qs from "qs";
 

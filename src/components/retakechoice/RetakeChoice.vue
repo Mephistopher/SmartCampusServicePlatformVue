@@ -1,7 +1,6 @@
 <template>
 
   <div class='content'>
-	//创表
     <el-table
         v-loading="loading"
         ref="multipleTable"
@@ -68,10 +67,7 @@
       </el-table-column>
 
     </el-table>
-    <el-table-item>
-		//按钮绑定事件
       <el-button type="primary" icon="el-icon-check" @click="submitChoice()">提交</el-button>
-    </el-table-item>
   </div>
 
 </template>
@@ -143,12 +139,10 @@ export default {
             queryCSTCourseByName(courseName).then(data=>{
 			//通过储存的课程名查询对应课程名的全部课程，并且不断给属性赋值
               if (data.success){
-                debugger
                 for (let i=0;i<data.data.length;i++){
                   if (data.data[i].teacherList.length>1){
 					  //不止一门需要重修时
                     for (let a=0;a<data.data[i].teacherList.length;a++){
-                      debugger
                       let formData = {}
                       formData.startTime = data.data[i].courseTimeList[a].startTime
                       formData.endTime = data.data[i].courseTimeList[a].endTime
