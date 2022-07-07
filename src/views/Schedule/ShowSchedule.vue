@@ -1,32 +1,16 @@
 <template>
   <div>
-    <el-container>
-      <el-header>
-        <HeaderBar/>
-      </el-header>
-      <el-container>
-        <HomeAside/>
-        <el-main>
-          <router-view/>
-        </el-main>
-      </el-container>
-    </el-container>
-    <FooterCard style="height: 230px"/>
+    <ClassSchedule/>
   </div>
-
 </template>
 
 <script>
-import HomeAside from "@/views/Home/HomeAside";
-import FooterCard from "@/components/footer/FooterCard";
-import HeaderBar from "@/components/header/HeaderBar";
+import ClassSchedule from "@/components/classSchedule/ClassSchedule";
 
 export default {
-  name: "HomeBody",
-  components: {
-    FooterCard,
-    HomeAside,
-    HeaderBar,
+  name: "ScheduleAndCourse",
+  components:{
+    ClassSchedule,
   }
 }
 </script>

@@ -1,9 +1,4 @@
-
-
 import Vue from 'vue'
-
-Vue.use(VueRouter)
-
 import VueRouter from 'vue-router'
 import HomeBody from "@/views/Home/HomeBody";
 import LoginIndex from "@/views/Login/LoginIndex";
@@ -15,8 +10,12 @@ import NewsList from "@/components/notice/NewsList";
 const TakeCourse = () => import('@/views/CourseSituation/TakeCourse')
 const UnpassCourse = () => import('@/views/CourseSituation/UnpassCourse')
 const SelectCourse = () => import('@/views/CourseSituation/SelectCourse')
+import campusResource from "@/components/resource/campusResource";
+import showCampusResource from "@/views/CampusResource/ShowCampusResource";
+import showSchedule from "@/views/Schedule/ShowSchedule";
+import showCourseInfo from "@/views/Schedule/showCourseInfo";
 
-
+Vue.use(VueRouter)
 
 const routes = [
   {
@@ -30,6 +29,21 @@ const routes = [
     component: HomeBody,
     children: [
       {
+        path: '/index/campusResource',
+        name: 'showcampusresource',
+        component: showCampusResource
+      },
+      {
+        path: '/index/schedule',
+        name: 'showschedule',
+        component: showSchedule
+      },
+      {
+        path: '/index/courseinfo',
+        name: 'courseinfo',
+        component: showCourseInfo
+      },
+      {
         path: '/showinfo',
         name: 'showinfo',
         component: ShowInfoView
@@ -40,13 +54,13 @@ const routes = [
         component: NoticeAndNews
       },
       {
-        path:'/noticelist',
-        name:'noticelist',
+        path: '/noticelist',
+        name: 'noticelist',
         component: NoticeList
       },
       {
-        path:'/newslist',
-        name:'newslist',
+        path: '/newslist',
+        name: 'newslist',
         component: NewsList
       },
       {
@@ -66,7 +80,6 @@ const routes = [
       }
     ]
   }
-
 ]
 
 const router = new VueRouter({

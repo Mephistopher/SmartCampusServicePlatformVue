@@ -19,14 +19,14 @@
             <span>个人信息</span>
         </el-menu-item>
 
-        <el-submenu index="3">
+        <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-s-grid"></i>
             <span>课程表</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="3-1" >查看课表</el-menu-item>
-            <el-menu-item index="3-2">课程信息查询</el-menu-item>
+            <el-menu-item index="4-1" @click="showSchedule">查看课表</el-menu-item>
+            <el-menu-item index="4-2" @click="showCourseInfo">课程信息查询</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
@@ -65,7 +65,7 @@
         </el-submenu>
 
 
-        <el-menu-item index="7">
+        <el-menu-item index="7" @click="showCampusResource">
           <div style="height: 100%;width: 100%">
             <i class="el-icon-s-opportunity"></i>
             <span>校内资源访问</span>
@@ -101,6 +101,11 @@ export default {
       takeCoursePath: '/takecourse',
       unpassCoursePath: '/unpassCourse',
       reTakeCoursePath: '/selectcourse',
+
+      campusResourcePath: '/index/campusResource',
+
+      showSchedulePath: '/index/schedule',
+      showCourseInfoPath: '/index/courseinfo',
       isShowAnnounce: true,
     }
   },
@@ -120,6 +125,15 @@ export default {
     },
     selectCourse(){
       this.$router.push(this.reTakeCoursePath)
+    },
+    showSchedule() {
+      this.$router.push(this.showSchedulePath)
+    },
+    showCourseInfo() {
+      this.$router.push(this.showCourseInfoPath)
+    },
+    showCampusResource(){
+      this.$router.push(this.campusResourcePath)
     }
   }
 }
@@ -131,7 +145,8 @@ export default {
   overflow: hidden;
   position: relative;
   border-bottom: 0;
-  border-top: 3px solid #409EFF;
+  border-top: 2px solid #409EFF;
+  border-right: 1px solid rgba(100, 100, 100, 0.7);
 }
 
 .sidebar-menu {
@@ -140,7 +155,7 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  bottom: 0;
+  bottom: 0px;
   overflow-y: hidden;
   overflow-x: hidden;
 }

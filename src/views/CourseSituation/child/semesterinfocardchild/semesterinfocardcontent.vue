@@ -12,7 +12,7 @@
       </el-card>
     </el-col>
     <el-col :span="6">
-      <el-card shadow="hover" :body-style="{'backgroundColor':'#e2b56c','color':'#ffffff'}">
+      <el-card shadow="hover" :body-style="{'backgroundColor':'#a1bb4a','color':'#ffffff'}">
         <span class="semester-info-card-little-font">未修读学分:</span>
         {{unGetedCredit}}
       </el-card>

@@ -19,8 +19,6 @@
                              @selectcourse="selectcourse"
                              :used-time="usedTime"
                              :course-list="courseList"/>
-
-
     </div>
 
   </show-window>
@@ -47,9 +45,7 @@
       direction="rtl"
       :before-close="handleClose">
     <el-collapse style="padding: 0 20px" accordion>
-      <course-table :courses="selectedCourse"/>
 
-      <el-divider/>
       <el-collapse-item
           v-for="(course, index) in selectedCourse"
           :name="index">
@@ -103,11 +99,10 @@ import SelectCourseQueryBar from "@/views/CourseSituation/child/selectcoursechil
 import ShowWindow from "@/components/showwindow/ShowWindow";
 import SelectCourseContext from "@/views/CourseSituation/child/selectcoursechild/select-course-context";
 import SelectCourseResult from "@/views/CourseSituation/child/selectcoursechild/SelectCourseResult";
-import CourseTable from "@/components/coursetable/CourseTable";
 
 export default {
   name: "ReTakeCourse",
-  components: {CourseTable, SelectCourseResult, SelectCourseContext, ShowWindow, SelectCourseQueryBar},
+  components: {SelectCourseResult, SelectCourseContext, ShowWindow, SelectCourseQueryBar},
   data(){
     return {
       dialogVisible: false,

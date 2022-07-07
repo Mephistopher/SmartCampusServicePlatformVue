@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {REQUESTAPIURL} from "@/config";
 import {getCookie} from "@/util/cookie";
-
+//java -jar F:\QQdownload\scsp-0.0.1-SNAPSHOT.jar
 axios.defaults.withCredentials = true
 
 /**
@@ -32,7 +32,7 @@ export function request(config) {
   const instance = axios.create({
       headers:{"Authorization":getCookie('token')},
     baseURL: baseURL,
-    timeout: 10000,
+    timeout: 30000,
       contentType: "application/json; charset=utf-8",
       withCredentials:true
   })

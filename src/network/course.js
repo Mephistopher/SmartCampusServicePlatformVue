@@ -236,3 +236,34 @@ export function cancelSelectCourseNetwork(courseId, userId){
         method: 'post'
     })
 }
+
+export function queryAllCoursesNetwork(page = 1, size=200){
+    return request({
+        url:'/course/conditionPageQueryCourse',
+        method: 'post',
+        data: {
+            page,
+            size,
+            queryType:9
+        }
+    })
+}
+
+export function conditionPageQueryUserCourseNetwork(userId, semester){
+    return request({
+        url:'/courseRecord/conditionPageQuery',
+        method: 'post',
+        data: {
+            userId,
+            semester
+        }
+    })
+}
+
+export function queryScheduleNetwork(Arr){
+    return request({
+        url:'/course/queryByIds',
+        method: 'post',
+        data: Arr
+    })
+}
