@@ -52,3 +52,35 @@ export function queryUserInfoNetwork(userId, idNumber){
     })
 }
 
+export function updateUserInfoNetwork(userId, phone, email, homeAddress) {
+    return request({
+        url:'/user/alterUserInfo',
+        method: 'post',
+        data:{
+            userId,
+            phone,
+            email,
+            homeAddress
+        }
+    })
+}
+
+/**
+ * 查询用户学期
+ */
+export function queryUserSemester(userId){
+    return request({
+        url:'/user/queryUserSemester',
+        method: 'post',
+        data:{
+            userId
+        }
+    })
+}
+
+export function loginValidateNetwork(){
+    return request({
+        url: '/user/validate',
+        method: 'post'
+    })
+}

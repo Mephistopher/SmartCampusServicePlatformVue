@@ -1,16 +1,18 @@
+<<<<<<< HEAD
 <template>
-  <el-form label-width="80px" :model="infoForm" style="text-align: left; width: 500px" :rules="rules" ref="infoForm">
-    <el-form-item label="学号" >
-      <span>{{infoForm.idNumber}}</span>
+  <el-form label-width="80px" :model="infoForm" style="text-align: left; width: 500px" :rules="rules" ref="infoForm"
+           label-position="left">
+    <el-form-item label="学号">
+      <span>{{ infoForm.idNumber }}</span>
     </el-form-item>
-    <el-form-item label="姓名" >
-      <span>{{infoForm.trueName}}</span>
+    <el-form-item label="姓名">
+      <span>{{ infoForm.trueName }}</span>
     </el-form-item>
-    <el-form-item label="学生类别" >
-      <span>{{infoForm.ebg}}</span>
+    <el-form-item label="学生类别">
+      <span>{{ infoForm.ebg }}</span>
     </el-form-item>
-    <el-form-item label="身份证号" >
-      <span>{{infoForm.chinaid}}</span>
+    <el-form-item label="身份证号">
+      <span>{{ infoForm.chinaid }}</span>
     </el-form-item>
     <el-form-item label="电子邮箱" prop="email">
       <el-input v-model="infoForm.email"></el-input>
@@ -21,14 +23,14 @@
     <el-form-item label="家庭住址" prop="homeAddress">
       <el-input v-model="infoForm.homeAddress"></el-input>
     </el-form-item>
-    <el-form-item label="宿舍" >
-      <span>{{infoForm.dormitory}}</span>
+    <el-form-item label="宿舍">
+      <span>{{ infoForm.dormitory }}</span>
     </el-form-item>
     <el-form-item label="专业">
-      <span>{{infoForm.major.name}}</span>
+      <span>{{ infoForm.major.name }}</span>
     </el-form-item>
     <el-form-item label="所属学院">
-      <span>{{infoForm.collage.name}}</span>
+      <span>{{ infoForm.collage.name }}</span>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" icon="el-icon-edit" @click="submitForm">保存</el-button>
@@ -37,7 +39,8 @@
 </template>
 
 <script>
-import {queryUserInfoNetwork} from "@/network/user";
+import {queryUserInfoNetwork, updateUserInfoNetwork} from "@/network/user";
+import {newsQueryNetwork} from "@/network/notice";
 
 export default {
   name: "ShowInfo",
@@ -80,17 +83,25 @@ export default {
         email: '13456@56.com',
         phone: '13245678910',
         homeAddress: '月球',
-        dormitory: '墓地'
+        dormitory: '墓地',
+        major: {
+          id: 1,
+          name: ""
+        },
+        collage: {
+          id: 1,
+          name: ""
+        }
       },
       rules: {
         email: [
-          { validator: validateEmail, trigger: 'blur' }
+          {validator: validateEmail, trigger: 'blur'}
         ],
         phone: [
-          { validator: validatePhone, trigger: 'blur' }
+          {validator: validatePhone, trigger: 'blur'}
         ],
         homeAddress: [
-          { validator: validateAddress, trigger: 'blur' }
+          {validator: validateAddress, trigger: 'blur'}
         ]
       }
     }
@@ -99,22 +110,37 @@ export default {
     submitForm() {
       this.$refs["infoForm"].validate((valid) => {
         if (valid) {
-          alert('submit!');
+          let loginUser = this.$store.getters.getLoginUser;
+          updateUserInfoNetwork(loginUser.id, this.infoForm.phone, this.infoForm.email, this.infoForm.homeAddress).then(res => {
+            console.log(res)
+            if (res.success) {
+              this.$message({
+                message: '修改已成功保存',
+                type: 'success'
+              });
+            } else {
+              this.$message({
+                message: '修改未能保存',
+                type: 'error'
+              });
+            }
+          })
         } else {
-          alert('error!');
-          return false;
+          this.$message({
+            message: '格式不合规范，请检查输入',
+            type: 'error'
+          });
         }
       });
     },
   },
-
   created() {
-    var loginUser = this.$store.getters.getLoginUser;
-    queryUserInfoNetwork(loginUser.id).then(res=>{
-      if(res.success){
+    let loginUser = this.$store.getters.getLoginUser;
+    queryUserInfoNetwork(loginUser.id).then(res => {
+      if (res.success) {
         this.infoForm = res.data
         console.log(this.infoForm)
-      }else{
+      } else {
         this.$message.error('查询用户信息失败')
       }
     })

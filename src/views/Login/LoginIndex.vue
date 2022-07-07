@@ -93,7 +93,7 @@ export default {
           this.$message.success('登录成功')
 
           this.$store.commit('setLoginUser', data.data)
-          this.$router.push('/home')
+          this.$router.push('/noticeandnews')
         }else {
           this.$message.error(data.errorMsg)
         }

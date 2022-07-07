@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <template>
   <div id="sidebar">
     <div class="sidebar-menu" :style="collapseStyle">
@@ -8,9 +9,7 @@
           text-color="#333333"
           background-color="#FFFFFF"
           active-text-color="#409EFF"
-          :unique-opened="true"
-          @open="handleOpen"
-          @close="handleClose">
+          :unique-opened="true">
         <el-menu-item index="1" @click="toHome">
             <i class="el-icon-s-home"></i>
             <span>首页公告</span>
@@ -21,14 +20,14 @@
             <span>个人信息</span>
         </el-menu-item>
 
-        <el-submenu index="3">
+        <el-submenu index="2">
           <template slot="title">
             <i class="el-icon-s-grid"></i>
             <span>课程表</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="3-1" @click="createAnnounce">查看课表</el-menu-item>
-            <el-menu-item index="3-2" @click="showAnnounce">课程信息查询</el-menu-item>
+            <el-menu-item index="4-1" @click="showSchedule">查看课表</el-menu-item>
+            <el-menu-item index="4-2" @click="showCourseInfo">课程信息查询</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
@@ -38,9 +37,9 @@
             <span>课程情况</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="4-1" @click="createTask">已修读学分</el-menu-item>
-            <el-menu-item index="4-2" @click="showTask">不及格课程情况</el-menu-item>
-            <el-menu-item index="4-3" @click="myTaskSubmitRecord">查看选课情况</el-menu-item>
+            <el-menu-item @click="toTakeCourse" >修读总揽</el-menu-item>
+            <el-menu-item @click="toUnpassCourse">不及格课程</el-menu-item>
+            <el-menu-item @click="selectCourse">选课</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
@@ -50,26 +49,38 @@
             <span>我的成绩</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="5-1" @click="createProject">成绩查询</el-menu-item>
-            <el-menu-item index="5-2" @click="projectList">补考重修成绩</el-menu-item>
+            <el-menu-item index="5-1">成绩查询</el-menu-item>
+            <el-menu-item index="5-2">补考重修成绩</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
         <el-submenu index="6">
+                  <template slot="title">
+                    <i class="el-icon-s-finance"></i>
+                    <span>重修/补考</span>
+                  </template>
+                  <el-menu-item-group>
+<!--                    <el-menu-item index="6-1" @click="retake">重修报名</el-menu-item>-->
+						<!-- 实际编写时发现重修报名功能不需要，故注释掉 -->
+                    <el-menu-item index="6-2" @click="retakeChoice">重修选课</el-menu-item>
+        			<el-menu-item index="6-3" @click="reTest">补考考试安排</el-menu-item>
+                  </el-menu-item-group>
+                </el-submenu>
+
+        <el-submenu index="7">
           <template slot="title">
-            <i class="el-icon-s-platform"></i>
+            <i class="el-icon-s-finance"></i>
             <span>登录助手</span>
           </template>
           <el-menu-item-group>
-            <el-menu-item index="6-1" @click="createProject">登录教务系统</el-menu-item>
-            <el-menu-item index="6-2" @click="projectList">登录迎新系统</el-menu-item>
+            <el-menu-item index="7-1" @click="jumptoEDU">登录教务系统</el-menu-item>
+            <el-menu-item index="7-2" @click="jumptoNEW">登录迎新系统</el-menu-item>
           </el-menu-item-group>
         </el-submenu>
 
 
-        <el-menu-item index="7">
-          <div style="height: 100%;width: 100%"
-               @click="toConferenceModel">
+        <el-menu-item index="8">
+          <div style="height: 100%;width: 100%">
             <i class="el-icon-s-opportunity"></i>
             <span>校内资源访问</span>
           </div>
@@ -101,7 +112,19 @@ export default {
     return {
       showInfoPath: '/showinfo',
       homePath: '/noticeandnews',
+      takeCoursePath: '/takecourse',
+      unpassCoursePath: '/unpassCourse',
+      reTakeCoursePath: '/selectcourse',
+
+      campusResourcePath: '/index/campusResource',
+
+      showSchedulePath: '/index/schedule',
+      showCourseInfoPath: '/index/courseinfo',
       isShowAnnounce: true,
+
+      retakePath:'/home/retake',
+      retakeChoicePath:'/home/retakechoice',
+      reTestPath:'/home/retest',
     }
   },
   methods: {
@@ -116,6 +139,39 @@ export default {
     },
     toHome() {
       this.$router.push(this.homePath)
+    },
+    toTakeCourse(){
+      this.$router.push(this.takeCoursePath)
+    },
+    toUnpassCourse(){
+      this.$router.push(this.unpassCoursePath)
+    },
+    selectCourse(){
+      this.$router.push(this.reTakeCoursePath)
+    },
+    showSchedule() {
+      this.$router.push(this.showSchedulePath)
+    },
+    showCourseInfo() {
+      this.$router.push(this.showCourseInfoPath)
+    },
+    showCampusResource(){
+      this.$router.push(this.campusResourcePath)
+    },
+    jumptoEDU() {
+      window.location.href = 'http://zhjw.scu.edu.cn/login'
+    },
+    jumptoNEW() {
+      window.location.href = 'http://yx.scu.edu.cn/#/login'
+    },
+    retake(){
+      this.$router.push(this.retakePath)
+    },
+    retakeChoice(){
+      this.$router.push(this.retakeChoicePath)
+    },
+    reTest(){
+      this.$router.push(this.reTestPath)
     }
   }
 }
@@ -137,7 +193,7 @@ export default {
   width: 100%;
   top: 0;
   left: 0;
-  bottom: 0;
+  bottom: 0px;
   overflow-y: hidden;
   overflow-x: hidden;
 }

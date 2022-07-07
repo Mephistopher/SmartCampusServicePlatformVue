@@ -4,28 +4,36 @@
       <span slot="title">
         <span style="display: inline-block;
               font-size: 26px;
+              font-weight: bold;
               width: 100%;text-align: center;
-              color: rgba(0, 0, 0, 0.1) !important;
-              -webkit-text-stroke: 1px rgba(255,255,255, 0.7);
-              -webkit-text-fill-color: rgba(255,255,255, 0.7);
+              color: rgba(0, 0, 0, 0) !important;
+              -webkit-text-stroke: 1px rgba(255,255,255, 0);
+              -webkit-text-fill-color: rgba(25,137,250, 0.7);
               -webkit-background-clip: text;">
           智慧校园服务平台
         </span>
       </span>
     </div>
-    <div style="position: absolute; right: 200px">
+    <div style="position: absolute; right: 200px; margin-bottom: 2px">
       <el-button icon="el-icon-date" type="primary"
-                 style="height: 60px; border-radius: 0px;bottom: -60px;margin-right: 50px" @click="showScheduleImage">
+                 style="height: 59px; border-radius: 0px;bottom: -60px;margin-right: 50px" @click="showScheduleImage">
         查看作息时间
       </el-button>
     </div>
     <div>
       <el-avatar shape="circle" :size="50" :src="imgsrc2"
-                 style="position: absolute; left: 87%; margin-top: 5px;"></el-avatar>
+                 style="position: absolute; left: 89%; margin-top: 5px;"></el-avatar>
     </div>
     <div
         style="position: absolute; right: 0; width: 180px; overflow: hidden; text-overflow:ellipsis; white-space: nowrap;">
-      <span>{{ this.Name }}</span>
+      <el-dropdown trigger="click" @command="handleCommand">
+        <span class="el-dropdown-link">
+          <span>{{ this.Name }}</span><i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <el-dropdown-menu slot="dropdown">
+          <el-dropdown-item icon="el-icon-s-fold" command="exit">退出</el-dropdown-item>
+        </el-dropdown-menu>
+      </el-dropdown>
     </div>
     <el-dialog
         title="作息时间表"
@@ -58,6 +66,34 @@ export default {
     showScheduleImage() {
       this.dialogVisible = true;
     },
+    handleCommand(command) {
+      if (command==="exit") {
+        this.$confirm('确定要退出吗？若如此做将返回登录界面', '警告', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          beforeClose: (action, instance, done) => {
+            if (action === 'confirm') {
+              this.$store.commit('setLoginUser', undefined)
+              this.$router.push("/")
+              done();
+            } else {
+              done();
+            }
+          }
+        }).then(action => {
+
+        });
+      }
+    }
+  },
+  beforeCreate() {
+    if(this.$store.getters.getLoginUser === undefined) {
+      this.$router.push("/")
+      this.$message({
+        message: '请先登录',
+        type: 'warning'
+      });
+    }
   }
 }
 </script>

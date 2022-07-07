@@ -1,7 +1,7 @@
 import axios from 'axios'
 import {REQUESTAPIURL} from "@/config";
 import {getCookie} from "@/util/cookie";
-
+//java -jar F:\QQdownload\scsp-0.0.1-SNAPSHOT.jar
 axios.defaults.withCredentials = true
 
 /**
@@ -27,32 +27,32 @@ axios.defaults.withCredentials = true
  */
 export function request(config) {
 
-  let baseURL = REQUESTAPIURL
+    let baseURL = REQUESTAPIURL
 
-  const instance = axios.create({
-      headers:{"Authorization":getCookie('token')},
-    baseURL: baseURL,
-    timeout: 10000,
-      contentType: "application/json; charset=utf-8",
-      withCredentials:true
-  })
+    const instance = axios.create({
+        headers: {"Authorization": getCookie('token')},
+        baseURL: baseURL,
+        timeout: 30000,
+        contentType: "application/json; charset=utf-8",
+        withCredentials: true
+    })
 
-  /*
-    拦截器，只返回请求的data
-  */
-  instance.interceptors.response.use(
-      (res) => {
-          console.log(res)
-          let result = res.data
-          if(result.code !== 200)
-              result.msg = decodeURI(result.msg)
-          return result
-      },
-      (error) => {
-        console.log(error)
-        if(error.response!==null && 500 === error.response.status){
-          window.open(baseURL+ '/error')
-        }
-      })
-  return instance(config)
+    /*
+      拦截器，只返回请求的data
+    */
+    instance.interceptors.response.use(
+        (res) => {
+            console.log(res)
+            let result = res.data
+            if (result.code !== 200)
+                result.msg = decodeURI(result.msg)
+            return result
+        },
+        (error) => {
+            console.log(error)
+            if (error.response !== null && 500 === error.response.status) {
+                window.open(baseURL + '/error')
+            }
+        })
+    return instance(config)
 }
