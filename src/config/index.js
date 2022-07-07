@@ -15,7 +15,7 @@ export const BACECONTEXTPATH = '/XM06/'
  * 请求api的 地址
  * @type {string}
  */
- export const REQUESTAPIURL = 'http://192.168.42.90:9000/pg07'
+ export const REQUESTAPIURL = 'http://127.0.0.1:9000/pg07'
 
 /**
  * 文件下载接口地址

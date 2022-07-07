@@ -1,4 +1,3 @@
-
 <template>
   <!-- 课表组件 -->
   <div class="class-table">
@@ -12,7 +11,7 @@
           </thead>
           <tbody >
           <tr v-for="(item,index) in classTableData.courses" :key="index" :class="{color1:index<4,color2:index>=4&&index<9,color3:index>=9}">
-            <td width=""
+<!--            <td width=""-->
             <td
                 style="font-size:12px;word-wrap: break-word;
   word-break: break-all;"
@@ -63,8 +62,7 @@
 </template>
 
 <script>
-var that;
-import { Dialog } from "vant";
+
 export default {
   data(){
     return {

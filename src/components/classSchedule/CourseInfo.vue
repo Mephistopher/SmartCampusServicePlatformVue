@@ -23,13 +23,13 @@
 
         <el-table-column label="教师详情"  >
           <template slot-scope="scope">
-          <el-button round="true" @click="showTeacher(scope.$index)">详情</el-button>
+          <el-button round @click="showTeacher(scope.$index)">详情</el-button>
           </template>
         </el-table-column>
 
       <el-table-column label="课程详情" >
         <template slot-scope="scope">
-          <el-button round="true" @click="showCourse(scope.$index)">详情</el-button>
+          <el-button :round="true" @click="showCourse(scope.$index)">详情</el-button>
         </template>
       </el-table-column>
     </el-table>
