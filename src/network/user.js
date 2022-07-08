@@ -1,5 +1,6 @@
 import {request} from "./request";
 import Qs from 'qs'
+import {getCookie} from "@/util/cookie";
 
 
 export function getCaptchaNetwork(userName){
@@ -82,5 +83,12 @@ export function loginValidateNetwork(){
     return request({
         url: '/user/validate',
         method: 'post'
+    })
+}
+
+export function logoutNetwork(){
+    return request({
+        url: '/user/logout/' + getCookie('token'),
+        method: 'post',
     })
 }

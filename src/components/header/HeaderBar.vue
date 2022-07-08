@@ -51,6 +51,8 @@
 <script>
 import img1 from '@/assets/schedule.png'
 import img2 from '@/assets/defaultAvatar.jpg'
+import {delCookie} from "@/util/cookie";
+import {logoutNetwork} from "@/network/user";
 
 export default {
   name: "HeaderBar",
@@ -74,6 +76,9 @@ export default {
           beforeClose: (action, instance, done) => {
             if (action === 'confirm') {
               this.$store.commit('setLoginUser', undefined)
+
+              logoutNetwork()
+              delCookie('token')
               this.$router.push("/")
               done();
             } else {
